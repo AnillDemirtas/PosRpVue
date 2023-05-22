@@ -8,7 +8,7 @@
         v-on="on"
         clearable
         @input="onTextInput"
-        v-mask="'##/##/####'"
+        v-mask="'##:##'"
         persistent-hint
         :prepend-icon="prependIcon"
         required
@@ -16,15 +16,21 @@
       >
       </v-text-field>
     </template>
-    <v-date-picker  v-model="dateContent" locale="tr-tr" scrollable>
+    >
+    <v-time-picker
+      v-model="dateContent"
+      locale="tr-tr"
+      scrollable
+      format="24hr"
+    >
       <v-spacer></v-spacer>
       <v-btn text color="primary" @click="date_modal = false">Vazgeç</v-btn>
       <v-btn text color="primary" @click="onPickerInput">Tamam</v-btn>
-    </v-date-picker>
+    </v-time-picker>
   </v-dialog>
 </template>
-
-<script>
+  
+  <script>
 import moment from "moment";
 
 export default {
@@ -42,7 +48,7 @@ export default {
       date: null,
       dateFormatted: null,
       dateContent: null,
-      defaultHint: "GG/AA/YYYY biçiminde Gün, Ay ve Yıl",
+      defaultHint: "HH:mm biçiminde",
     };
   },
 
@@ -50,7 +56,7 @@ export default {
     onTextInput() {
       if (
         this.dateFormatted !== null &&
-        !moment(this.dateFormatted, "DD/MM/YYYY", true).isValid()
+        !moment(this.dateFormatted, "HH:mm", true).isValid()
       ) {
         return;
       }
@@ -60,20 +66,20 @@ export default {
     onPickerInput() {
       this.$refs.dialog.save();
       this.dateFormatted = this.formatDate(this.dateContent);
-      this.$emit("tarihDegisti", this.dateFormatted);
+      this.$emit("saatDegisti", this.dateFormatted);
     },
 
     formatDate(date) {
       if (!date) return null;
 
-      const [year, month, day] = date.split("-");
-      return `${day}/${month}/${year}`;
+      const [year] = date.split("-");
+      return `${year}`;
     },
 
     parseDate(date) {
       if (!date) return null;
 
-      const [day, month, year] = date.split("/");
+      const [day, month, year] = date.split(":");
       return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     },
   },
@@ -90,7 +96,7 @@ export default {
       if (val !== undefined) {
         const d = moment(val, moment.ISO_8601);
         if (d.isValid()) {
-          this.dateFormatted = d.format("DD/MM/YYYY");
+          this.dateFormatted = d.format("HH:mm");
           this.dateContent = this.parseDate(this.dateFormatted);
         }
       }
@@ -98,3 +104,4 @@ export default {
   },
 };
 </script>
+  
