@@ -1,10 +1,12 @@
 <template>
-  <apexchart
-    type="bar"
-    :options="chartOptions"
-    :key="key"
-    :series="series"
-  ></apexchart>
+  <div>
+    <apexchart
+      type="bar"
+      :options="chartOptions"
+      :key="key"
+      :series="series"
+    ></apexchart>
+  </div>
 </template>
 
 <script>
@@ -20,13 +22,17 @@ export default {
   },
   methods: {
     array_convert() {
-      this.chartOptions.xaxis = {
-        categories: this.gelen_sayisal_deger?.map((d) => d.sube_adi),
+      this.chartOptions = {
+        ...this.chartOptions,
+        xaxis: {
+          ...this.chartOptions.xaxis,
+          categories: this.gelen_sayisal_deger?.map((d) => d.sube_adi) || [],
+        },
       };
       this.series = [
         {
           name: "₺",
-          data: this.gelen_sayisal_deger?.map((d) => d.tutar),
+          data: this.gelen_sayisal_deger?.map((d) => d.tutar) || [],
           formatedData: [],
         },
       ];
@@ -36,7 +42,7 @@ export default {
         style: "currency",
         currency: "TRY",
       });
-      this.series[0].formattedData = this.series[0].data.map((value) =>
+      this.series[0].formattedData = this.series[0]?.data?.map((value) =>
         formatter.format(value)
       );
     },
@@ -51,7 +57,7 @@ export default {
         dataLabels: {
           overflow: "ellipsis",
           style: {
-            fontSize: "10px", // Metin boyutunu istediğiniz değere ayarlayın
+            fontSize: "10px",
           },
           formatter: function (val) {
             return new Intl.NumberFormat("tr-TR", {

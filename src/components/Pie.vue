@@ -1,5 +1,7 @@
 <template>
-  <apexchart type="donut" :options="chartOptions" :series="series"></apexchart>
+  <div>
+    <apexchart type="donut" :options="chartOptions" :series="series"></apexchart>
+  </div>
 </template>
 
 <script>
@@ -9,15 +11,15 @@ export default {
   watch: {
     isimler: function (val) {
       this.gelen_sayisal_deger = val;
-
       this.array_convert();
     },
   },
   methods: {
     array_convert() {
-      this.series = this.gelen_sayisal_deger.map((d) => d.value);
+      this.series = this.gelen_sayisal_deger?.map((d) => d.value) || [];
       this.chartOptions = {
-        labels: this.gelen_sayisal_deger.map((d) => d.name),
+        ...this.chartOptions,
+        labels: this.gelen_sayisal_deger?.map((d) => d.name) || [],
       };
     },
   },

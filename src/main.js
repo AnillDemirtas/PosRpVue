@@ -8,6 +8,7 @@ import "vuetify-dialog/dist/vuetify-dialog.css";
 import VueTheMask from "vue-the-mask";
 import VueApexCharts from "vue-apexcharts";
 import { VueMasonryPlugin } from "vue-masonry";
+import DatetimePicker from 'vuetify-datetime-picker'
 
 
 
@@ -21,6 +22,7 @@ Vue.use(VuetifyDialog, {
 Vue.use(VueTheMask);
 Vue.use(require("vue-moment"));
 Vue.use(VueApexCharts);
+Vue.use(DatetimePicker);
 
 Vue.component("apexchart", VueApexCharts);
 

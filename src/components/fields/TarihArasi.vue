@@ -8,7 +8,7 @@
         <v-card-text>
           <v-form>
             <v-card-title class="mt-0"></v-card-title>
-            <v-row class="mt-0">
+            <!-- <v-row class="mt-0">
               <Datepicker
                 :model="deneme"
                 fieldName="firstRegistrationDate"
@@ -27,7 +27,63 @@
                 prependIcon="mdi-information-outline"
                 @tarihDegisti="(i) => bitisTarihiDegisti(i)"
               />
-            </v-row>
+            </v-row> -->
+
+            <v-row>
+              <v-icon class="icon-prepend">mdi-information-outline</v-icon>
+              <v-col cols="11">
+                <v-datetime-picker
+                  label="Başlangıç"
+                  v-model="baslangicTarihi"
+                  dateFormat="dd/MM/yyyy"
+                  time-format="HH:mm"
+                  :disabled="true"
+                >
+                  <template slot="dateIcon">
+                    <v-icon>mdi-calendar</v-icon>
+                  </template>
+                  <template slot="timeIcon">
+                    <v-icon>mdi-clock</v-icon>
+                  </template>
+                  <template slot="actions" slot-scope="{ parent }">
+                    <v-btn
+                      color="error lighten-1"
+                      @click.native="parent.clearHandler"
+                      >Vazgeç</v-btn
+                    >
+                    <v-btn color="success darken-1" @click="parent.okHandler"
+                      >Tamam</v-btn
+                    >
+                  </template>
+                </v-datetime-picker>
+              </v-col>
+              <v-icon class="icon-prepend">mdi-information-outline</v-icon>
+              <v-col cols="11">
+                <v-datetime-picker
+                  label="Bitiş"
+                  v-model="bitisTarihi"
+                  dateFormat="dd/MM/yyyy"
+                  time-format="HH:mm:ss"
+                >
+                  <template slot="dateIcon">
+                    <v-icon>mdi-calendar</v-icon>
+                  </template>
+                  <template slot="timeIcon">
+                    <v-icon>mdi-clock</v-icon>
+                  </template>
+                  <template slot="actions" slot-scope="{ parent }">
+                    <v-btn
+                      color="error lighten-1"
+                      @click.native="parent.clearHandler"
+                      >Vazgeç</v-btn
+                    >
+                    <v-btn color="success darken-1" @click="parent.okHandler"
+                      >Tamam</v-btn
+                    >
+                  </template>
+                </v-datetime-picker>
+              </v-col></v-row
+            >
           </v-form>
           <v-row class="mt-10">
             <v-spacer> </v-spacer>
@@ -55,33 +111,37 @@
 </template>
 
 <script>
-import Datepicker from "@/components/fields/Datepicker";
+import moment from "moment";
 
 export default {
   watch: {
     async modal() {},
+    baslangicTarihi(val) {
+      this.bir_alt_comboya_gidecek_data.baslangic =
+        moment(val).format("DD/MM/YYYY HH:mm");
+    },
+    bitisTarihi(val) {
+      this.bir_alt_comboya_gidecek_data.bitis =
+        moment(val).format("DD/MM/YYYY HH:mm");
+    },
   },
 
   props: { modal: null },
   data() {
     return {
-      deneme: null,
       bir_alt_comboya_gidecek_data: {
         baslangic: null,
         bitis: null,
       },
+
+      baslangicTarihi: null,
+      bitisTarihi: null,
     };
   },
+  computed: {},
 
-  methods: {
-    baslangicTarihiDegisti(i) {
-      this.bir_alt_comboya_gidecek_data.baslangic = i;
-    },
-    bitisTarihiDegisti(i) {
-      this.bir_alt_comboya_gidecek_data.bitis = i;
-    },
-  },
-  components: { Datepicker },
+  methods: {},
+  components: {},
 };
 </script>
 

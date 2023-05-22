@@ -214,6 +214,7 @@ export default {
       this.tarih_arasi_tetikle = true;
     },
     async TarhiArasiShowClose(i) {
+      console.log("zz", i);
       this.tarih_arasi_tetikle = false;
       if (i) {
         if (i.baslangic !== null && i.bitis !== null) {
@@ -242,26 +243,26 @@ export default {
       this.list = [];
       this.list.push({
         renk: "green",
-        veri: this.sube_tutarlari?.veriler[0]?.tutar,
+        veri: this.sube_tutarlari?.veriler[0]?.tutar ?? 0,
         bilgi: "Toplam Tutar",
         icon: "mdi-cash-fast",
       });
       this.list.push({
         renk: "info",
-        veri: this.sube_tutarlari?.veriler[0]?.iskonto,
+        veri: this.sube_tutarlari?.veriler[0]?.iskonto ?? 0,
         bilgi: "Toplam İskonto",
         icon: "mdi-percent",
       });
 
       this.list.push({
         renk: "orange",
-        veri: this.sube_tutarlari?.veriler[0]?.iade,
+        veri: this.sube_tutarlari?.veriler[0]?.iade ?? 0,
         bilgi: "Toplam İade",
         icon: "mdi-keyboard-return",
       });
       this.list.push({
         renk: "pink",
-        veri: this.sube_tutarlari?.veriler[0]?.iptal,
+        veri: this.sube_tutarlari?.veriler[0]?.iptal ?? 0,
         bilgi: "Toplam İptal",
         icon: "mdi-close",
       });
