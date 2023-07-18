@@ -117,19 +117,6 @@ export default {
       {
         listGroup: true,
         prependIcon: "mdi-cog-outline",
-        title: "Profil",
-        items: [
-          {
-            title: "Parola Yönetimi",
-            icon: "mdi-google-classroom",
-            to: { name: "SinifList" },
-          },
-          // },
-        ],
-      },
-      {
-        listGroup: true,
-        prependIcon: "mdi-cog-outline",
         title: "Ayarlar",
         items: [
           {

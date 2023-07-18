@@ -16,6 +16,9 @@
             <v-btn @click="tarih_arasi" class="mr-2" color="black" dark>
               Tarih Arası
             </v-btn>
+            <v-btn @click="bugun" class="mr-2" color="primary" dark>
+              Bugün (00:00-23:59)
+            </v-btn>
             <v-spacer></v-spacer>
 
             <v-chip
@@ -141,6 +144,33 @@
                     </v-card-actions>
                   </v-card>
                 </v-col>
+                <v-col
+                  v-masonry-tile
+                  class="pa-1 vMasonryTileCol"
+                  cols="12"
+                  sm="6"
+                  md="6"
+                  lg="4"
+                >
+                  <!-- <v-card elevation="4" class="ma-2 pa-7">
+                    <v-card-title class="justify-center"
+                      >Tahsilat Detayları</v-card-title
+                    >
+                    <v-card-actions>
+                      <v-row justify="center">
+                        <v-btn
+                          color="primary"
+                          class="mr-2"
+                          v-for="sube in subeler?.veriler"
+                          :key="sube.id"
+                          @click="sube_click(sube.id)"
+                        >
+                          {{ sube.Sube_adi }}
+                        </v-btn>
+                      </v-row>
+                    </v-card-actions>
+                  </v-card> -->
+                </v-col>
               </v-row>
             </v-form>
 
@@ -178,28 +208,7 @@ import PaketciTutarlari from "@/components/fields/PaketciTutarlari.vue";
 
 export default {
   async mounted() {
-    this.subelere_gore_tutarlar = await tutarlar(
-      new Date().toLocaleDateString("tr-TR"),
-      new Date().toLocaleDateString("tr-TR")
-    );
-    this.sube_tutarlari = await sube_tutarlari(
-      new Date().toLocaleDateString("tr-TR"),
-      new Date().toLocaleDateString("tr-TR")
-    );
-    this.subeye_gore_en_cok_satilan_urunler =
-      await subeye_gore_en_cok_satilan_urunler(
-        new Date().toLocaleDateString("tr-TR"),
-        new Date().toLocaleDateString("tr-TR")
-      );
-    this.subeye_gore_acik_masalar = await subeye_gore_acik_masalar(
-      new Date().toLocaleDateString("tr-TR"),
-      new Date().toLocaleDateString("tr-TR")
-    );
-
-    this.tutarlari_ayarlar();
-    this.subeler = await subeler();
-
-    this.$nextTick(() => this.$redrawVueMasonry("masonryRow"));
+    await this.bugun();
   },
   components: {
     Layout,
@@ -210,6 +219,32 @@ export default {
     PaketciTutarlari,
   },
   methods: {
+    async bugun() {
+      await tarih_secimi(null, null);
+
+      this.subelere_gore_tutarlar = await tutarlar(
+        new Date().toLocaleDateString("tr-TR"),
+        new Date().toLocaleDateString("tr-TR")
+      );
+      this.sube_tutarlari = await sube_tutarlari(
+        new Date().toLocaleDateString("tr-TR"),
+        new Date().toLocaleDateString("tr-TR")
+      );
+      this.subeye_gore_en_cok_satilan_urunler =
+        await subeye_gore_en_cok_satilan_urunler(
+          new Date().toLocaleDateString("tr-TR"),
+          new Date().toLocaleDateString("tr-TR")
+        );
+      this.subeye_gore_acik_masalar = await subeye_gore_acik_masalar(
+        new Date().toLocaleDateString("tr-TR"),
+        new Date().toLocaleDateString("tr-TR")
+      );
+
+      this.tutarlari_ayarlar();
+      this.subeler = await subeler();
+
+      this.$nextTick(() => this.$redrawVueMasonry("masonryRow"));
+    },
     tarih_arasi() {
       this.tarih_arasi_tetikle = true;
     },

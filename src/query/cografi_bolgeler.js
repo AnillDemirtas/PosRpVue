@@ -4,7 +4,7 @@ const apiClient = new ApiClient();
 
 const ulkeyeGoreIlleriListele = async () => {
   return await apiClient.makeRequest({
-    url: `${process.env.VUE_APP_API_URL}/api/v1/ulkeyeGoreIlleriListele`,
+    url: `${localStorage.getItem("ip")}/api/v1/ulkeyeGoreIlleriListele`,
     headers: {
       "donem-id": localStorage.getItem("donem_id"),
       jeton: localStorage.getItem("jeton"),
@@ -22,7 +22,7 @@ const ulkeyeGoreIlleriListele = async () => {
 
 const ileGoreIlceleriListele = async (adresIlId) => {
   return await apiClient.makeRequest({
-    url: `${process.env.VUE_APP_API_URL}/api/v1/ileGoreIlceleriListele`,
+    url: `${localStorage.getItem("ip")}/api/v1/ileGoreIlceleriListele`,
     headers: {
       "donem-id": localStorage.getItem("donem_id"),
       jeton: localStorage.getItem("jeton"),
@@ -40,7 +40,7 @@ const ileGoreIlceleriListele = async (adresIlId) => {
 
 const ilceyeGoreMahalleleriListele = async (adresIlceId) => {
   return await apiClient.makeRequest({
-    url: `${process.env.VUE_APP_API_URL}/api/v1/ilceyeGoreMahalleleriListele`,
+    url: `${localStorage.getItem("ip")}/api/v1/ilceyeGoreMahalleleriListele`,
     headers: {
       "donem-id": localStorage.getItem("donem_id"),
       jeton: localStorage.getItem("jeton"),

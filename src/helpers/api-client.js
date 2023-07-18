@@ -50,7 +50,7 @@ export class ApiClient {
       var fetchMethod = null;
       var fetchUrl = this.mergeParamsIntoUrl(url, params);
       var fetchBody = null;
-      var fetchCredentials = "include";
+      var fetchCredentials = "omit";
 
       if (form) {
         // NOTE: For form data posts, we want the browser to build the Content-

@@ -25,6 +25,11 @@ const routes = [
     name: "SubeList",
     component: () => import("../views/Subeler.vue"),
   },
+  {
+    path: "/Ayarlar",
+    name: "Ayarlar",
+    component: () => import("../components/fields/Ayarlar.vue"),
+  },
   // {
   //   path: "/KimliklerList",
   //   name: "KimliklerList",
@@ -44,20 +49,16 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // const jeton = localStorage.getItem("jeton") ? true : false;
-  // const sube_id = localStorage.getItem("sube_id") ? true : false;
-  // const donem_id = localStorage.getItem("donem_id") ? true : false;
-  // if (to.name !== "OturumAc" && !jeton) {
-  //   next({ name: "OturumAc" });
-  // } else if (
-  //   to.name !== "SubeDonem" &&
-  //   to.name !== "OturumAc" &&
-  //   (!sube_id || !donem_id)
-  // ) {
-  //   next({ name: "SubeDonem" });
-  // } else {
-  //   return next();
-  // }
+  const login = localStorage.getItem("login") ? true : false;
+  const ip = localStorage.getItem("login") ? true : false;
+  if (to.name !== "OturumAc" && !login && to.name !== "Ayarlar") {
+    if (ip === false) {
+      next({ name: "Ayarlar" });
+    } else {
+      next({ name: "OturumAc" });
+    }
+  }
+
   return next();
 });
 
