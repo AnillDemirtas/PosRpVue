@@ -1,26 +1,25 @@
 import { ApiClient } from "../helpers/api-client";
+import store from "../store";
 
 const apiClient = new ApiClient();
 
-const tutarlar = async (baslangic, bitis) => {
+const tum_genel_tutarlar = async (sube_id) => {
   return await apiClient.makeRequest({
-    url: `${localStorage.getItem("ip")}/Rp_Tutarlar`,
-    json: { baslangic, bitis },
+    url: `${store.state.apiurl}/Rp_Tutarlar?sube_id=${sube_id}`,
   });
 };
 
-const sube_tutarlari = async (baslangic, bitis) => {
+const subelere_gore_tutarlar = async (baslangic, bitis) => {
   return await apiClient.makeRequest({
-    url: `${localStorage.getItem("ip")}/Rp_Sube_Toplamlari`,
+    url: `${store.state.apiurl}/Rp_Sube_Toplamlari`,
     json: { baslangic, bitis },
   });
 };
 
 const tarih_secimi = async (baslangic, bitis) => {
   return await apiClient.makeRequest({
-    url: `${localStorage.getItem("ip")}/rp_tarihler`,
-    json: { baslangic, bitis },
+    url: `${store.state.apiurl}/rp_tarihler?baslangic=${baslangic}&bitis=${bitis}`,
   });
 };
 
-export { tutarlar, sube_tutarlari, tarih_secimi };
+export { tum_genel_tutarlar, subelere_gore_tutarlar, tarih_secimi };

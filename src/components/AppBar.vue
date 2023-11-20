@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="primary" dark>
+  <v-app-bar app color="black" dark>
     <v-app-bar-nav-icon
       @click="$store.state.navDrawer = !$store.state.navDrawer"
     ></v-app-bar-nav-icon>
@@ -30,7 +30,7 @@ export default {
       this.$router.push({
         name: "OturumAc",
       });
-      localStorage.clear();
+      //localStorage.clear();
     },
 
     anasayfa() {

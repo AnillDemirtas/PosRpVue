@@ -26,29 +26,29 @@ export default {
         ...this.chartOptions,
         xaxis: {
           ...this.chartOptions.xaxis,
-          categories: this.gelen_sayisal_deger?.map((d) => d.sube_adi) || [],
+          categories: this.gelen_sayisal_deger?.map((d) => d.Sube_adi) || [],
         },
       };
       this.series = [
         {
-          name: "₺",
+          // name: "₺",
           data: this.gelen_sayisal_deger?.map((d) => d.tutar) || [],
           formatedData: [],
         },
       ];
     },
-    formatData() {
-      const formatter = new Intl.NumberFormat("en-TR", {
-        style: "currency",
-        currency: "TRY",
-      });
-      this.series[0].formattedData = this.series[0]?.data?.map((value) =>
-        formatter.format(value)
-      );
-    },
+    // formatData() {
+    //   const formatter = new Intl.NumberFormat("en-TR", {
+    //     style: "currency",
+    //     currency: "TRY",
+    //   });
+    //   this.series[0].formattedData = this.series[0]?.data?.map((value) =>
+    //     formatter.format(value)
+    //   );
+    // },
   },
   created() {
-    this.formatData();
+    //this.formatData();
   },
   data() {
     return {

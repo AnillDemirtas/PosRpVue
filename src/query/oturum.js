@@ -1,10 +1,18 @@
 import { ApiClient } from "../helpers/api-client";
+import store from "../store";
 
 const apiClient = new ApiClient();
+//   /Rp/
+const config_cagir = async () => {
+  return await apiClient.makeRequest({
+    url: `config.json`,
+    method: "GET",
+  });
+};
 
 const oturumAc = async (Gsm, Parola) => {
   return await apiClient.makeRequest({
-    url: `${localStorage.getItem("ip")}/Rp_Kullanici`,
+    url: `${store.state.apiurl}/Rp_Kullanici`,
     json: {
       Gsm: Gsm,
       Parola: Parola,
@@ -12,4 +20,4 @@ const oturumAc = async (Gsm, Parola) => {
   });
 };
 
-export { oturumAc };
+export { oturumAc, config_cagir };

@@ -29,10 +29,10 @@
     </v-card>
   </v-dialog>
 </template>
-  
-  <script>
-import Datatables from "../../components/datatables/index.vue";
-import { subeye_gore_en_cok_satilan_urun_detayi } from "../../query/satilan_urunler";
+
+<script>
+import Datatables from "../../datatables/index.vue";
+import { subeye_gore_en_cok_satilan_urun_detayi } from "@/query/satilan_urunler";
 export default {
   components: { Datatables },
   props: { modal: null, sube_id: null, urun_id: null },
@@ -54,15 +54,18 @@ export default {
         {
           text: "Ürün",
           value: "urun_adi",
+          align: "center",
         },
 
         {
           text: "Miktar",
           value: "toplam_sayi",
+          align: "center",
         },
         {
           text: "Toplam Tutar",
           value: "toplam_tutar",
+          align: "center",
         },
       ],
     };
@@ -70,6 +73,5 @@ export default {
   methods: {},
 };
 </script>
-  
-  <style>
-</style>
+
+<style></style>

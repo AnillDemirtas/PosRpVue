@@ -12,14 +12,14 @@
           <v-layout align-center justify-center>
             <v-flex xs12 sm8 md4>
               <v-card class="elevation-12">
-                <v-toolbar dark color="primary">
+                <v-toolbar dark color="black">
                   <v-img
                     max-height="50"
                     max-width="50"
                     src="../assets/report.png"
                   />
 
-                  <v-toolbar-title>POS RP</v-toolbar-title>
+                  <v-toolbar-title>RAPORLAR</v-toolbar-title>
                 </v-toolbar>
                 <v-card-text>
                   <v-form>
@@ -42,7 +42,7 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="primary" @click="kullaniciGirisKontrolu()">
+                  <v-btn color="black" dark @click="kullaniciGirisKontrolu()">
                     OTURUM AÇ
                   </v-btn>
                 </v-card-actions>
@@ -76,12 +76,15 @@ export default {
       });
     },
     async kullaniciGirisKontrolu() {
-      if (this.Gsm === "") {
+      if (this.Gsm === "" || this.Gsm === null) {
         this.hatali("Kullanici adı giriniz");
-      } else if (this.Parola === "") {
+      } else if (this.Parola === "" || this.Parola === null) {
         this.hatali("Parola giriniz");
       } else {
         this.gelen_sonuc = await oturumAc(this.Gsm, this.Parola);
+
+        this.$store.commit("setId", this.gelen_sonuc?.Users[0]?.id);
+        this.$store.commit("setAdSoyad", this.gelen_sonuc?.Users[0]?.AdSoyad);
 
         if (this.gelen_sonuc.sonuc === false) {
           this.hatali("Parola hatalı");
@@ -97,10 +100,12 @@ export default {
     return {
       Gsm: null,
       Parola: null,
-      sube_donem_tetikle: false,
     };
   },
-  mounted() {},
+  async mounted() {
+    await this.$store.dispatch("fetchConfigBilgileri");
+  },
+
   components: {
     Layout,
   },

@@ -16,20 +16,11 @@ const routes = [
     component: AnaSayfa,
   },
   {
-    path: "/StokSatisList",
-    name: "StokSatisList",
-    component: () => import("../views/StokSatisList.vue"),
-  },
-  {
     path: "/SubeList",
     name: "SubeList",
     component: () => import("../views/Subeler.vue"),
   },
-  {
-    path: "/Ayarlar",
-    name: "Ayarlar",
-    component: () => import("../components/fields/Ayarlar.vue"),
-  },
+
   // {
   //   path: "/KimliklerList",
   //   name: "KimliklerList",

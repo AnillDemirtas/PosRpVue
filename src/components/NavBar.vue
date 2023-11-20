@@ -1,9 +1,9 @@
 <template>
-  <v-navigation-drawer v-model="$store.state.navDrawer" app>
+  <v-navigation-drawer v-model="$store.state.navDrawer" app color="black" dark>
     <v-list>
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="text-h6">Anıl Demirtaş</v-list-item-title>
+          <v-list-item-title class="text-h6">{{ adSoyad }}</v-list-item-title>
         </v-list-item-content>
         <v-list-item-action>
           <v-icon>mdi-menu-down</v-icon>
@@ -75,6 +75,11 @@
 
 <script>
 export default {
+  computed: {
+    adSoyad() {
+      return this.$store.getters.getAdSoyad;
+    },
+  },
   beforeMount() {
     this.list
       .filter((l) => l.listGroup)
@@ -108,6 +113,7 @@ export default {
   },
 
   data: () => ({
+    mini: true,
     list: [
       {
         title: "Ana Sayfa",

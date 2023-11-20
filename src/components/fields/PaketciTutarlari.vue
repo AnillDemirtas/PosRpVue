@@ -42,8 +42,8 @@
     </v-card>
   </v-dialog>
 </template>
-  
-  <script>
+
+<script>
 import Datatables from "../../components/datatables/index.vue";
 import { subelere_gore_satilan_urunler } from "../../query/satilan_urunler";
 import SatilanStokDetay from "../../components/fields/SatilanStokDetay.vue";
@@ -57,6 +57,7 @@ export default {
       this.gelen_data = await subelere_gore_satilan_urunler(
         this.secilen_sube_id
       );
+      console.log("gggg", this.gelen_data);
     },
   },
 
@@ -103,6 +104,5 @@ export default {
   },
 };
 </script>
-  
-  <style>
-</style>
+
+<style></style>
