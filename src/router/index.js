@@ -20,7 +20,6 @@ const routes = [
     name: "SubeList",
     component: () => import("../views/Subeler.vue"),
   },
-
   // {
   //   path: "/KimliklerList",
   //   name: "KimliklerList",
@@ -41,13 +40,8 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const login = localStorage.getItem("login") ? true : false;
-  const ip = localStorage.getItem("login") ? true : false;
-  if (to.name !== "OturumAc" && !login && to.name !== "Ayarlar") {
-    if (ip === false) {
-      next({ name: "Ayarlar" });
-    } else {
-      next({ name: "OturumAc" });
-    }
+  if (to.name !== "OturumAc" && !login) {
+    next({ name: "OturumAc" });
   }
 
   return next();

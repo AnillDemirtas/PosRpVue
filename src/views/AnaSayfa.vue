@@ -124,7 +124,7 @@
           md="6"
           lg="3"
           elevation="4"
-          class="ma-2 pa-7 mb-200 text-center"
+          class="ma-2 pa-7 text-center"
         >
           <v-card-title class="justify-center">Satılan Stoklar</v-card-title>
           <v-card-text>
@@ -139,12 +139,32 @@
             </v-btn>
           </v-card-text>
         </v-card>
-
         <SatilanStokSecenegi
           :secilen_sube_id="secilen_sube_id"
           :modal="SatilanStokSecenegiTetikle"
           @hideDialog="(i) => showSatilanStoklarSecenegiClose(i)"
         ></SatilanStokSecenegi>
+
+        <v-card
+          cols="12"
+          sm="6"
+          md="6"
+          lg="3"
+          elevation="4"
+          class="ma-2 pa-7 mb-200 text-center"
+        >
+          <v-card-title class="justify-center">Paketçi Raporu</v-card-title>
+          <v-card-text>
+            <datatables :headers="headers" :items="paketciler?.veriler">
+              <template v-slot:dt_actions="{ item }">
+                <v-icon small class="mr-2" @click="updateDialog(item.id)">
+                  mdi-pencil
+                </v-icon>
+                <v-icon small @click="silDialog(item)">mdi-delete</v-icon>
+              </template>
+            </datatables>
+          </v-card-text>
+        </v-card>
       </v-container>
     </template>
   </Layout>
@@ -153,6 +173,7 @@
 import Layout from "@/components/Layout";
 import Bar from "@/components/Bar";
 import Pie from "@/components/Pie";
+import Datatables from "@/components/datatables/index.vue";
 
 import TarihArasi from "@/components/fields/TarihArasi";
 import { mesai_turleri } from "../query/tarihler";
@@ -165,7 +186,7 @@ import {
 import { subeye_gore_en_cok_satilan_urunler } from "../query/satilan_urunler";
 import { subeye_gore_acik_masalar } from "../query/acik_masalar";
 import { subeler } from "../query/subeler";
-
+import { paketci_raporu } from "../query/paketci_raporu";
 import SatilanStokSecenegi from "@/components/fields/SatilanStokSecenegi";
 
 //import { secilen_tarihler } from "../query/tarihler";
@@ -191,6 +212,7 @@ export default {
     Pie,
     TarihArasi,
     SatilanStokSecenegi,
+    Datatables,
   },
   computed: {
     formattedMesailer() {
@@ -305,6 +327,9 @@ export default {
     // },
     async tum_sorgular(baslangic, bitis) {
       this.overlay = true;
+
+      this.paketciler = await paketci_raporu(baslangic, bitis);
+
       await tarih_secimi(baslangic, bitis);
       this.gelen_tum_genel_tutarlar = await tum_genel_tutarlar(
         this.default_sube.id
@@ -400,6 +425,7 @@ export default {
       subeler_selectbox: [],
       secilen_sube_id: null,
       search: "",
+      paketciler: [],
       baslik: [
         {
           text: "Detay",
@@ -419,6 +445,20 @@ export default {
         {
           text: "Toplam Tutar",
           value: "toplam_tutar",
+        },
+      ],
+      headers: [
+        {
+          text: "Paketçi",
+          value: "AdSoyad",
+        },
+        {
+          text: "Paket",
+          value: "sayi",
+        },
+        {
+          text: "Toplam",
+          value: "ToplamTutar",
         },
       ],
     };

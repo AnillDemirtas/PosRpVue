@@ -30,7 +30,7 @@ export default {
       this.$router.push({
         name: "OturumAc",
       });
-      //localStorage.clear();
+      localStorage.clear();
     },
 
     anasayfa() {

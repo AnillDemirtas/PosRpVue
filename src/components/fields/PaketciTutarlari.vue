@@ -46,7 +46,7 @@
 <script>
 import Datatables from "../../components/datatables/index.vue";
 import { subelere_gore_satilan_urunler } from "../../query/satilan_urunler";
-import SatilanStokDetay from "../../components/fields/SatilanStokDetay.vue";
+import SatilanStokDetay from "./SatilanUrunler/SatilanStokDetay.vue";
 
 export default {
   components: { Datatables, SatilanStokDetay },

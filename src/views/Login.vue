@@ -82,13 +82,13 @@ export default {
         this.hatali("Parola giriniz");
       } else {
         this.gelen_sonuc = await oturumAc(this.Gsm, this.Parola);
+        console.log("zzzzz", this.gelen_sonuc?.sonuc);
 
-        this.$store.commit("setId", this.gelen_sonuc?.Users[0]?.id);
-        this.$store.commit("setAdSoyad", this.gelen_sonuc?.Users[0]?.AdSoyad);
-
-        if (this.gelen_sonuc.sonuc === false) {
+        if (this.gelen_sonuc?.sonuc === false) {
           this.hatali("Parola hatalı");
         } else {
+          this.$store.commit("setId", this.gelen_sonuc?.Users[0]?.id);
+          this.$store.commit("setAdSoyad", this.gelen_sonuc?.Users[0]?.AdSoyad);
           localStorage.setItem("login", true);
           this.$router.push("Anasayfa");
         }
