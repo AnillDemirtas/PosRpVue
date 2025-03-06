@@ -16,10 +16,22 @@ const subelere_gore_tutarlar = async (baslangic, bitis) => {
   });
 };
 
+const subelere_gore_kasalar = async (baslangic, bitis) => {
+  return await apiClient.makeRequest({
+    url: `${store.state.apiurl}/Rp_Kasalar`,
+    json: { baslangic, bitis },
+  });
+};
+
 const tarih_secimi = async (baslangic, bitis) => {
   return await apiClient.makeRequest({
     url: `${store.state.apiurl}/rp_tarihler?baslangic=${baslangic}&bitis=${bitis}`,
   });
 };
 
-export { tum_genel_tutarlar, subelere_gore_tutarlar, tarih_secimi };
+export {
+  tum_genel_tutarlar,
+  subelere_gore_tutarlar,
+  tarih_secimi,
+  subelere_gore_kasalar,
+};

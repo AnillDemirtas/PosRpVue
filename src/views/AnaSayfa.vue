@@ -91,9 +91,44 @@
           </v-list-item>
         </v-card>
         <v-card cols="12" sm="6" md="6" lg="3" elevation="4" class="ma-2 pa-7">
-          <v-card-title class="justify-center">Açık Masalara</v-card-title>
+          <v-card-title class="justify-center">Kasalar</v-card-title>
+          <template>
+            <v-simple-table>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-center">Şube</th>
+                    <th class="text-center">Kasa Adı</th>
+                    <th class="text-center">Toplam Tutar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="item in subelere_gore_kasalar_listesi?.veriler"
+                    :key="item.kasa_adi"
+                  >
+                    <td class="text-center">{{ item.sube_adi }}</td>
+                    <td class="text-center">{{ item.kasa_adi }}</td>
+                    <td class="text-center">
+                      {{
+                        new Intl.NumberFormat("tr-TR", {
+                          style: "currency",
+                          currency: "TRY",
+                        }).format(item.toplam)
+                      }}
+                    </td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+          </template>
+        </v-card>
+        <v-card cols="12" sm="6" md="6" lg="3" elevation="4" class="ma-2 pa-7">
+          <v-card-title class="justify-center"
+            >Tahsilat Hareketleri</v-card-title
+          >
           <v-card-text>
-            <Pie :isimler="subeye_gore_acik_masalar?.veriler"></Pie>
+            <Bar :isimler="subelere_gore_tutarlar?.veriler"></Bar>
           </v-card-text>
         </v-card>
         <v-card cols="12" sm="6" md="6" lg="3" elevation="4" class="ma-2 pa-7">
@@ -105,19 +140,19 @@
           </v-card-text>
         </v-card>
         <v-card cols="12" sm="6" md="6" lg="3" elevation="4" class="ma-2 pa-7">
+          <v-card-title class="justify-center">Açık Masalara</v-card-title>
+          <v-card-text>
+            <Pie :isimler="subeye_gore_acik_masalar?.veriler"></Pie>
+          </v-card-text>
+        </v-card>
+
+        <v-card cols="12" sm="6" md="6" lg="3" elevation="4" class="ma-2 pa-7">
           <v-card-title class="justify-center">Paket Siparişleri</v-card-title>
           <v-card-text>
             <Pie :isimler="gelen_paketci_tutarlari"></Pie>
           </v-card-text>
         </v-card>
-        <v-card cols="12" sm="6" md="6" lg="3" elevation="4" class="ma-2 pa-7">
-          <v-card-title class="justify-center"
-            >Tahsilat Hareketleri</v-card-title
-          >
-          <v-card-text>
-            <Bar :isimler="subelere_gore_tutarlar?.veriler"></Bar>
-          </v-card-text>
-        </v-card>
+
         <v-card
           cols="12"
           sm="6"
@@ -146,6 +181,7 @@
         ></SatilanStokSecenegi>
 
         <v-card
+          v-if="paketciler.sonuc"
           cols="12"
           sm="6"
           md="6"
@@ -155,6 +191,7 @@
         >
           <v-card-title class="justify-center">Paketçi Raporu</v-card-title>
           <v-card-text>
+            {{ paketciler }}
             <datatables :headers="headers" :items="paketciler?.veriler">
               <template v-slot:dt_actions="{ item }">
                 <v-icon small class="mr-2" @click="updateDialog(item.id)">
@@ -182,6 +219,7 @@ import {
   tum_genel_tutarlar,
   subelere_gore_tutarlar,
   tarih_secimi,
+  subelere_gore_kasalar,
 } from "../query/genel_toplamlar";
 import { subeye_gore_en_cok_satilan_urunler } from "../query/satilan_urunler";
 import { subeye_gore_acik_masalar } from "../query/acik_masalar";
@@ -340,6 +378,11 @@ export default {
         bitis
       );
 
+      this.subelere_gore_kasalar_listesi = await subelere_gore_kasalar(
+        baslangic,
+        bitis
+      );
+
       this.subeye_gore_en_cok_satilan_urunler =
         await subeye_gore_en_cok_satilan_urunler(baslangic, bitis);
       if (this.subeye_gore_en_cok_satilan_urunler.sonuc === false) {
@@ -419,6 +462,7 @@ export default {
       subeye_gore_satilan_urunler: null,
       subeye_gore_acik_masalar: null,
       subelere_gore_tutarlar: [],
+      subelere_gore_kasalar_listesi: [],
       gelen_satislar: [],
       satilan_stoklar_dialog: null,
       subeler: [],
